@@ -42,7 +42,7 @@ window.onload = function(){
   var setPlayer = function(){
     player.spriteOffset = 5;
     player.startingX = 6;
-    player.startingY = 14;
+    player.startingY = 1;
     player.x = player.startingX * game.spriteWidth;
     player.y = player.startingY * game.spriteHeight;
     player.direction = 0;
@@ -101,7 +101,7 @@ window.onload = function(){
       "<br />--Exp: "+player.exp + 
       "<br />--Level: " + player.level + 
       "<br />--GP: " + player.gp +
-      "<br /><br />--Inventory:"; 
+      "<br /><br />--Inventário:"; 
     player.statusLabel.height = 170;
     player.showInventory(0);
   };
@@ -215,7 +215,7 @@ window.onload = function(){
   }
   var greeter = {
     action: function(){
-      npc.say("hello");
+      npc.say("E aí!");
     }
   };
   var shopScene = new Scene();
@@ -502,7 +502,7 @@ window.onload = function(){
     };
     
     shop.greeting = "Olá! Eu sou o Maneki. Meow. Eu vendo coisas.";
-    shop.apology = "Meow... desculpe, você não tem dinheiro suficiente pra isso.";
+    shop.apology = "Meow... desculpe, você não tem dinheiro suficiente.";
     shop.sale = "Aqui está!";
     shop.farewell = "Volte sempre! Meow!";
     shop.message = new Label(shop.greeting);
