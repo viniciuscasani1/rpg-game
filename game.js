@@ -261,15 +261,15 @@ window.onload = function(){
       player.exp += player.currentEnemy.exp;
       player.gp += player.currentEnemy.gp;
       player.currentEnemy.hp = player.currentEnemy.maxHp;
-      player.statusLabel.text = "You won!<br />" +
-        "You gained "+ player.currentEnemy.exp + " exp<br />"+
-        "and " + player.currentEnemy.gp + " gold pieces!";
+      player.statusLabel.text = "Você venceu!<br />" +
+        "Você ganhou "+ player.currentEnemy.exp + " de experiência<br />"+
+        "e " + player.currentEnemy.gp + " moedas de ouro!";
       player.statusLabel.height = 45;
       if(player.exp > player.levelStats[player.level].expMax){
         player.level += 1;
         player.statusLabel.text = player.statusLabel.text + 
-          "<br />And you gained a level!"+
-          "<br />You are now at level " + player.level +"!";
+          "<br />E você subiu seu level!"+
+          "<br />Agora você está no level " + player.level +"!";
         player.statusLabel.height = 75;
       }
     };
@@ -278,14 +278,14 @@ window.onload = function(){
       player.hp = player.levelStats[player.level].maxHp;
       player.mp = player.levelStats[player.level].maxMp;
       player.gp = Math.round(player.gp/2);
-      player.statusLabel.text = "You lost!";
+      player.statusLabel.text = "Você perdeu!";
       player.statusLabel.height = 12;
     };
     battle.playerAttack = function(){
       var currentEnemy = player.currentEnemy;
       var playerHit = battle.hitStrength(player.attack());
       currentEnemy.hp = currentEnemy.hp - playerHit;
-      battle.menu.text = "You did " + playerHit + " damage!";
+      battle.menu.text = "Você causou " + playerHit + " de dano!";
       if(currentEnemy.hp <= 0){
          battle.won();
       };
@@ -294,12 +294,12 @@ window.onload = function(){
       var currentEnemy = player.currentEnemy;
       var enemyHit = battle.hitStrength(currentEnemy.attack);
       player.hp = player.hp - enemyHit;
-      battle.menu.text = "You took " + enemyHit + " damage!";
+      battle.menu.text = "Você recebeu " + enemyHit + " de dano!";
       if(player.hp <= 0){
         battle.lost();
       };
     };
-    battle.actions = [{name: "Fight", action: function(){
+    battle.actions = [{name: "Luta", action: function(){
         battle.wait = true;
         battle.playerAttack();
         setTimeout(function(){
@@ -319,8 +319,8 @@ window.onload = function(){
           };
         }, 1000);
       }},
-      {name: "Magic", action: function(){
-        battle.menu.text = "You don't know any magic yet!";
+      {name: "Habilidade", action: function(){
+        battle.menu.text = "Você não sabe nenhuma habilidade ainda!";
         battle.wait = true;
         battle.activeAction = 0;
         setTimeout(function(){
@@ -328,9 +328,9 @@ window.onload = function(){
           battle.wait = false;
         }, 1000);
       }},
-      {name: "Run", action: function(){
+      {name: "Correr", action: function(){
         game.pause();
-        player.statusLabel.text = "You ran away!";
+        player.statusLabel.text = "Você correu!";
         player.statusLabel.height = 12;
         battle.menu.text = "";
         game.popScene();
@@ -501,10 +501,10 @@ window.onload = function(){
       }
     };
     
-    shop.greeting = "Hi!  I'm Maneki. Meow. I sell things.";
-    shop.apology = "Meow... sorry, you don't have the money for this.";
-    shop.sale = "Here ya go!";
-    shop.farewell = "Come again! Meow!";
+    shop.greeting = "Olá! Eu sou o Maneki. Meow. Eu vendo coisas.";
+    shop.apology = "Meow... desculpe, você não tem dinheiro suficiente pra isso.";
+    shop.sale = "Aqui está!";
+    shop.farewell = "Volte sempre! Meow!";
     shop.message = new Label(shop.greeting);
     shop.drawManeki();
     var shoppingFunds = new Label(shop.shoppingFunds());
