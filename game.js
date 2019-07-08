@@ -9,7 +9,7 @@ window.onload = function(){
   game.items = [{price: 1000, description: "Hurter", id: 0}, 
                {price: 5000, description: "Drg. Paw", id: 1},
                {price: 5000, description: "Ice Magic", id: 2},
-               {price: 60, description: "Chess Set", id: 3}]
+               {price: 600, description: "Chess Set", id: 3}]
   game.fps = 15;
   game.spriteWidth = 16;
   game.spriteHeight = 16;
@@ -78,7 +78,9 @@ window.onload = function(){
     }
     player.levelStats = [{},{attack: 4, maxHp: 10, maxMp: 0, expMax: 10},
                          {attack: 6, maxHp: 14, maxMp: 0, expMax: 30},
-                         {attack: 7, maxHp: 20, maxMp: 5, expMax: 50}
+                         {attack: 7, maxHp: 20, maxMp: 5, expMax: 50},
+                         {attack: 10, maxHp: 30, maxMp: 10, expMax: 75},
+                         {attack: 15, maxHp: 45, maxMp: 20, expMax: 100}
     ];
     player.attack = function(){
       return player.levelStats[player.level].attack;
