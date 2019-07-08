@@ -6,7 +6,7 @@ window.onload = function(){
   game.spriteSheetHeight = 16;
   game.itemSpriteSheetWidth = 64;
   game.preload(['sprites.png', 'items.png']);
-  game.items = [{price: 1000, description: "Hurter", id: 0}, 
+  game.items = [{price: 1000, description: "Mjolnir", id: 0}, 
                {price: 5000, description: "Drg. Paw", id: 1},
                {price: 5000, description: "Ice Magic", id: 2},
                {price: 60, description: "Chess Set", id: 3}]
