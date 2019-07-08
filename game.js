@@ -5,12 +5,12 @@ window.onload = function(){
   game.spriteSheetWidth = 256;
   game.spriteSheetHeight = 16;
   game.itemSpriteSheetWidth = 64;
-  game.preload(['sprites.png', 'items.png']);
-  game.items = [{price: 1000, description: "Mjolnir", id: 0}, 
-               {price: 5000, description: "Drg. Paw", id: 1},
-               {price: 5000, description: "Ice Magic", id: 2},
-               {price: 600, description: "Chess Set", id: 3}]
-  game.fps = 15;
+  game.preload(['sprites.png', 'items.jpeg']);
+  game.items = [{price: 1000, description: "Mjolnir", id: 0},
+    {price: 5000, description: "Drg. Paw", id: 1},
+    {price: 5000, description: "Ice Magic", id: 2},
+    {price: 600, description: "Chess Set", id: 3}]
+  game.fps = 20;
   game.spriteWidth = 16;
   game.spriteHeight = 16;
   var map = new Map(game.spriteWidth, game.spriteHeight);
@@ -47,7 +47,7 @@ window.onload = function(){
     player.y = player.startingY * game.spriteHeight;
     player.direction = 0;
     player.walk = 0;
-    player.frame = player.spriteOffset + player.direction; 
+    player.frame = player.spriteOffset + player.direction;
     player.image = new Surface(game.spriteSheetWidth, game.spriteSheetHeight);
     player.image.draw(game.assets['sprites.png']);
 
@@ -74,20 +74,20 @@ window.onload = function(){
     if (window.localStorage.getItem('inventory')) {
       player.inventory = JSON.parse(window.localStorage.getItem('inventory'));
     } else {
-      player.inventory = []; 
+      player.inventory = [];
     }
     player.levelStats = [{},{attack: 4, maxHp: 10, maxMp: 0, expMax: 10},
-                         {attack: 6, maxHp: 14, maxMp: 0, expMax: 30},
-                         {attack: 7, maxHp: 20, maxMp: 5, expMax: 50},
-                         {attack: 10, maxHp: 30, maxMp: 10, expMax: 75},
-                         {attack: 15, maxHp: 45, maxMp: 20, expMax: 100}
+      {attack: 6, maxHp: 14, maxMp: 0, expMax: 30},
+      {attack: 7, maxHp: 20, maxMp: 5, expMax: 50},
+      {attack: 10, maxHp: 30, maxMp: 10, expMax: 75},
+      {attack: 15, maxHp: 45, maxMp: 20, expMax: 100}
     ];
     player.attack = function(){
       return player.levelStats[player.level].attack;
     };
     player.hp = player.levelStats[player.level].maxHp;
     player.mp = player.levelStats[player.level].maxMp;
-      
+
     player.statusLabel = new Label("");
     player.statusLabel.width = game.width;
     player.statusLabel.y = undefined;
@@ -96,21 +96,34 @@ window.onload = function(){
     player.statusLabel.backgroundColor = '#000';
   };
   player.displayStatus = function(){
-    player.statusLabel.text = 
-      "--" + player.name + " the " + player.characterClass + 
-      "<br />--HP: "+player.hp + "/" + player.levelStats[player.level].maxHp + 
-      "<br />--MP: "+player.mp + "/" + player.levelStats[player.level].maxMp + 
-      "<br />--Exp: "+player.exp + 
-      "<br />--Level: " + player.level + 
-      "<br />--GP: " + player.gp +
-      "<br /><br />--Inventário:"; 
-    player.statusLabel.height = 170;
+    player.statusLabel.text =
+        "--" + player.name + " the " + player.characterClass +
+        "<br />--HP: "+player.hp + "/" + player.levelStats[player.level].maxHp +
+        "<br />--MP: "+player.mp + "/" + player.levelStats[player.level].maxMp +
+        "<br />--Exp: "+player.exp +
+        "<br />--Level: " + player.level +
+        "<br />--GP: " + player.gp +
+        "<br /><br />--Comandos: " +
+        "<br />-- CIMA: Move para cima" +
+        "<br />-- BAIXO: Move para baixo " +
+        "<br />-- ESQUERDA: Move para esquerda " +
+        "<br />-- DIREITA: Move para direita " +
+        "<br />-- ESPAÇO: Realiza ação/abre inventário " +
+        "<br /><br />--Inventário:";
+    player.statusLabel.height = 300;
+    player.statusLabel.width = 250;
     player.showInventory(0);
+    player.ajuda(0)
   };
   player.clearStatus = function(){
-    player.statusLabel.text = "";
+    player.statusLabel.text = " ";
     player.statusLabel.height = 0;
     player.hideInventory();
+  };
+
+  player.setMovimentos = function () {
+    player.statusLabel.teste = "asdasdasd";
+    player.statusLabel.height = 20;
   };
 
   player.move = function(){
@@ -148,7 +161,7 @@ window.onload = function(){
       if (this.xMovement || this.yMovement) {
         var x = this.x + (this.xMovement ? this.xMovement / Math.abs(this.xMovement) * 16 : 0);
         var y = this.y + (this.yMovement ? this.yMovement / Math.abs(this.yMovement) * 16 : 0);
-      if (0 <= x && x < map.width && 0 <= y && y < map.height && !map.hitTest(x, y)) {
+        if (0 <= x && x < map.width && 0 <= y && y < map.height && !map.hitTest(x, y)) {
           this.isMoving = true;
           this.move();
         }
@@ -191,14 +204,14 @@ window.onload = function(){
     for(var i = 0; i < player.visibleItems.length; i++){
       player.visibleItems[i].remove();
     }
-      player.visibleItems = [];
+    player.visibleItems = [];
   };
   player.showInventory = function(yOffset){
-     if(player.visibleItems.length === 0){
-      player.itemSurface.draw(game.assets['items.png']);
+    if(player.visibleItems.length === 0){
+      player.itemSurface.draw(game.assets['items.jpeg']);
       for (var i = 0; i < player.inventory.length; i++){
         var item = new Sprite(game.spriteWidth, game.spriteHeight);
-        item.y = 130 + yOffset;
+        item.y = 220 + yOffset;
         item.x = 30 + 70*i;
         item.frame = player.inventory[i];
         item.scaleX = 2;
@@ -208,6 +221,18 @@ window.onload = function(){
         game.currentScene.addChild(item);
       }
     }
+  };
+
+  player.ajuda = function(yOffset){
+    var item = new Sprite(game.spriteWidth, game.spriteHeight);
+    item.y = 30 + yOffset;
+    item.x = 30 + 70*i;
+    item.frame = player.inventory[i];
+    item.scaleX = 2;
+    item.scaleY = 2;
+    item.image = player.itemSurface;
+    player.visibleItems.push(item);
+    game.currentScene.addChild(item);
   };
   var npc = {
     say: function(message){
@@ -234,7 +259,7 @@ window.onload = function(){
     sprite: 15,
     attack: 3,
     exp: 3,
-    gp: 5,
+    gp: 1000,
     action: function(){
       player.currentEnemy = this;
       game.pushScene(battleScene);
@@ -242,12 +267,12 @@ window.onload = function(){
   };
   var spriteRoles = [,,greeter,,cat,,,,,,,,,,,brawler]
   var setBattle = function(){
-    battleScene.backgroundColor = '#000';
+    battleScene.backgroundColor = '#020';
     var battle = new Group();
     battle.menu = new Label();
     battle.menu.x = 20;
     battle.menu.y = 170;
-    battle.menu.color = '#fff';  
+    battle.menu.color = '#fff';
     battle.activeAction = 0;
     battle.getPlayerStatus = function(){
       return "HP: " + player.hp + "<br />MP: " + player.mp;
@@ -256,6 +281,19 @@ window.onload = function(){
     battle.playerStatus.color = '#fff';
     battle.playerStatus.x = 200;
     battle.playerStatus.y = 120;
+    if (player.currentEnemy != undefined) {
+      battle.getEnemyStatus = function () {
+        return "Inimigo <br />HP: " + player.currentEnemy.hp;
+      };
+    }else{
+      battle.getEnemyStatus = function () {
+        return "";
+      }
+    }
+    battle.enemyStatus = new Label(battle.getEnemyStatus());
+    battle.enemyStatus.color = '#fff';
+    battle.enemyStatus.x = 200;
+    battle.enemyStatus.y = 60;
     battle.hitStrength = function(hit){
       return Math.round((Math.random() + .5) * hit);
     };
@@ -265,14 +303,14 @@ window.onload = function(){
       player.gp += player.currentEnemy.gp;
       player.currentEnemy.hp = player.currentEnemy.maxHp;
       player.statusLabel.text = "Você venceu!<br />" +
-        "Você ganhou "+ player.currentEnemy.exp + " de experiência<br />"+
-        "e " + player.currentEnemy.gp + " moedas de ouro!";
+          "Você ganhou "+ player.currentEnemy.exp + " de experiência<br />"+
+          "e " + player.currentEnemy.gp + " moedas de ouro!";
       player.statusLabel.height = 45;
       if(player.exp > player.levelStats[player.level].expMax){
         player.level += 1;
-        player.statusLabel.text = player.statusLabel.text + 
-          "<br />E você subiu seu level!"+
-          "<br />Agora você está no level " + player.level +"!";
+        player.statusLabel.text = player.statusLabel.text +
+            "<br />E você subiu seu level!"+
+            "<br />Agora você está no level " + player.level +"!";
         player.statusLabel.height = 75;
       }
     };
@@ -290,7 +328,7 @@ window.onload = function(){
       currentEnemy.hp = currentEnemy.hp - playerHit;
       battle.menu.text = "Você causou " + playerHit + " de dano!";
       if(currentEnemy.hp <= 0){
-         battle.won();
+        battle.won();
       };
     };
     battle.enemyAttack = function(){
@@ -323,21 +361,21 @@ window.onload = function(){
         }, 1000);
       }},
       {name: "Habilidade", action: function(){
-        battle.menu.text = "Você não sabe nenhuma habilidade ainda!";
-        battle.wait = true;
-        battle.activeAction = 0;
-        setTimeout(function(){
-          battle.menu.text = battle.listActions();
-          battle.wait = false;
-        }, 1000);
-      }},
+          battle.menu.text = "Você não sabe nenhuma habilidade ainda!";
+          battle.wait = true;
+          battle.activeAction = 0;
+          setTimeout(function(){
+            battle.menu.text = battle.listActions();
+            battle.wait = false;
+          }, 1000);
+        }},
       {name: "Correr", action: function(){
-        game.pause();
-        player.statusLabel.text = "Você correu!";
-        player.statusLabel.height = 12;
-        battle.menu.text = "";
-        game.popScene();
-      }}
+          game.pause();
+          player.statusLabel.text = "Você correu!";
+          player.statusLabel.height = 12;
+          battle.menu.text = "";
+          game.popScene();
+        }}
     ];
     battle.listActions = function(){
       battle.optionText = [];
@@ -369,7 +407,7 @@ window.onload = function(){
       battle.addChild(battle.enemy);
     };
     battle.addCombatants();
-    
+
     battleScene.on('enter', function() {
       battle.over = false;
       battle.wait = true;
@@ -392,6 +430,7 @@ window.onload = function(){
           battle.menu.text = battle.listActions();
         }
         battle.playerStatus.text = battle.getPlayerStatus();
+        battle.enemyStatus.text = battle.getEnemyStatus();
       };
     })
     battleScene.on('exit', function() {
@@ -399,10 +438,12 @@ window.onload = function(){
         battle.menu.text = "";
         battle.activeAction = 0;
         battle.playerStatus.text = battle.getPlayerStatus();
+        battle.enemyStatus.text = battle.getEnemyStatus();
         game.resume();
       }, 1000);
     });
     battle.addChild(battle.playerStatus);
+    battle.addChild(battle.enemyStatus);
     battle.addChild(battle.menu);
     battle.addChild(battle.player);
     battleScene.addChild(battle);
@@ -429,12 +470,12 @@ window.onload = function(){
       this.message.color = '#fff';
       this.addChild(this.message);
     };
-    
+
     shop.drawItemsForSale = function(){
       for(var i = 0; i < game.items.length; i++){
         var image = new Surface(game.itemSpriteSheetWidth, game.spriteSheetHeight);
         var item = new Sprite(game.spriteWidth, game.spriteHeight);
-        image.draw(game.assets['items.png']);
+        image.draw(game.assets['items.jpeg']);
         itemLocationX = 30 + 70*i;
         itemLocationY = 70;
         item.y = itemLocationY;
@@ -503,7 +544,7 @@ window.onload = function(){
         this.message.text = this.sale;
       }
     };
-    
+
     shop.greeting = "Olá! Eu sou o Maneki. Meow. Eu vendo coisas.";
     shop.apology = "Meow... desculpe, você não tem dinheiro suficiente.";
     shop.sale = "Aqui está!";
@@ -519,7 +560,7 @@ window.onload = function(){
     shopScene.backgroundColor = '#000';
     shopScene.addChild(shop);
   };
-    
+
   game.focusViewport = function(){
     var x = Math.min((game.width  - 16) / 2 - player.x, 0);
     var y = Math.min((game.height - 16) / 2 - player.y, 0);
@@ -540,12 +581,13 @@ window.onload = function(){
       }
     };
     setInterval(game.saveToLocalStorage, 5000);
-    
+
     setMaps();
     setPlayer();
     setStage();
     setShopping();
     setBattle();
+    player.setMovimentos();
     player.on('enterframe', function() {
       player.move();
       if (game.input.a) {
