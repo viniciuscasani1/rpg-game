@@ -217,7 +217,8 @@ window.onload = function(){
   }
   var greeter = {
     action: function(){
-      npc.say("E aí!");
+      var lines = ["E aí!", "Tudo certo, aventureiro?", "Você precisa de uma espada nova...", "Sua aventura está só começando!", "Vamos lá, vamos lá!"];
+      npc.say(lines[Math.floor(Math.random() * 5) + 1]);
     }
   };
   var shopScene = new Scene();
